@@ -6,7 +6,7 @@
 /*   By: hdaoudi <hdaoudi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 02:44:07 by hdaoudi           #+#    #+#             */
-/*   Updated: 2025/03/04 02:49:44 by hdaoudi          ###   ########.fr       */
+/*   Updated: 2025/03/05 03:18:12 by hdaoudi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,7 @@ int	ft_atoi(const char *str)
 		r = (r * 10) + (str[i] - '0');
 		i++;
 	}
+	if(str[i] != '\0')
+		return (-1);
 	return (sign * r);
 }

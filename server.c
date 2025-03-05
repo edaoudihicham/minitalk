@@ -6,13 +6,11 @@
 /*   By: hdaoudi <hdaoudi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 02:42:40 by hdaoudi           #+#    #+#             */
-/*   Updated: 2025/03/05 02:17:28 by hdaoudi          ###   ########.fr       */
+/*   Updated: 2025/03/05 15:07:44 by hdaoudi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-#include <signal.h>
-#include <unistd.h>
 
 void	handler(int signal, siginfo_t *info, void *ucontext)
 {
@@ -37,6 +35,7 @@ void	handler(int signal, siginfo_t *info, void *ucontext)
 		bit = 0;
 		c = 0;
 	}
+	
 }
 
 int	main(int ac, char **av)

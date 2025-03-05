@@ -6,7 +6,7 @@
 /*   By: hdaoudi <hdaoudi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 02:42:31 by hdaoudi           #+#    #+#             */
-/*   Updated: 2025/03/05 01:05:08 by hdaoudi          ###   ########.fr       */
+/*   Updated: 2025/03/05 15:05:49 by hdaoudi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 void	send_char(pid_t pid, char c)
 {
 	int	i;
-	i = 7; 
+
+	i = 7;
 	while (i >= 0)
 	{
 		if ((c >> i) & 1)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(200); 
+		usleep(100);
 		i--;
 	}
 }
@@ -39,7 +40,12 @@ void	send_string(pid_t pid, char *str)
 
 int	main(int ac, char **av)
 {
+	int	pid;
+
+	pid = ft_atoi(av[1]);
+	if (pid == -1)
+		return (write(2, "Wrong PID", 9), 1);
 	if (ac != 3)
 		return (write(2, "Syntax: ./client PID \"string\"\n", 30), 1);
-	send_string(ft_atoi(av[1]), av[2]);
+	send_string(pid, av[2]);
 }
