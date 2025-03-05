@@ -6,7 +6,7 @@
 /*   By: hdaoudi <hdaoudi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 02:42:40 by hdaoudi           #+#    #+#             */
-/*   Updated: 2025/03/05 15:07:44 by hdaoudi          ###   ########.fr       */
+/*   Updated: 2025/03/05 17:11:15 by hdaoudi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ void	handler(int signal, siginfo_t *info, void *ucontext)
 	if (bit == 8)
 	{
 		write(1, &c, 1);
+		if (c == '\0')
+			kill(client_pid, SIGUSR1);
 		bit = 0;
 		c = 0;
 	}
-	
 }
 
 int	main(int ac, char **av)

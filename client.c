@@ -6,12 +6,18 @@
 /*   By: hdaoudi <hdaoudi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 02:42:31 by hdaoudi           #+#    #+#             */
-/*   Updated: 2025/03/05 15:05:49 by hdaoudi          ###   ########.fr       */
+/*   Updated: 2025/03/05 17:12:01 by hdaoudi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
+void	message(int pid)
+{
+	(void)pid;
+	write(1, "Done!", 5);
+	exit(0);
+}
 void	send_char(pid_t pid, char c)
 {
 	int	i;
@@ -23,7 +29,7 @@ void	send_char(pid_t pid, char c)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(100);
+		usleep(500);
 		i--;
 	}
 }
@@ -42,6 +48,7 @@ int	main(int ac, char **av)
 {
 	int	pid;
 
+	signal(SIGUSR1, message);
 	pid = ft_atoi(av[1]);
 	if (pid == -1)
 		return (write(2, "Wrong PID", 9), 1);
