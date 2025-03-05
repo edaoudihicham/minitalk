@@ -6,33 +6,31 @@
 /*   By: hdaoudi <hdaoudi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 02:42:40 by hdaoudi           #+#    #+#             */
-/*   Updated: 2025/03/04 03:49:44 by hdaoudi          ###   ########.fr       */
+/*   Updated: 2025/03/05 01:10:06 by hdaoudi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
+#include <signal.h>
+#include <unistd.h>
 
 void	action(int signal, siginfo_t *info, void *ucontext)
 {
-	static char	c=0;
-	static int	bit;
+	static char	c = 0;
+	static int	bit = 0;
 
 	(void)ucontext;
 	(void)info;
-	bit++;
-	write(1, &c, 1);
+	c = c << 1;
 	if (signal == SIGUSR1)
-		c = c & 0x80;
-	else
-		c = c >> 1;
+		c = c | 1;
+	bit++;
 	if (bit == 8)
 	{
 		write(1, &c, 1);
 		bit = 0;
 		c = 0;
 	}
-	else
-		c = c >> 1;
 }
 
 int	main(int ac, char **av)

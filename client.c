@@ -6,7 +6,7 @@
 /*   By: hdaoudi <hdaoudi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 02:42:31 by hdaoudi           #+#    #+#             */
-/*   Updated: 2025/03/04 03:46:27 by hdaoudi          ###   ########.fr       */
+/*   Updated: 2025/03/05 01:05:08 by hdaoudi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 void	send_char(pid_t pid, char c)
 {
 	int	i;
-
-	i = 0;
-	while (i < 8)
+	i = 7; 
+	while (i >= 0)
 	{
-		if (c >> i & 1)
+		if ((c >> i) & 1)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		sleep(1);
-		i++;
+		usleep(200); 
+		i--;
 	}
 }
+
 void	send_string(pid_t pid, char *str)
 {
 	while (*str)
@@ -34,6 +34,7 @@ void	send_string(pid_t pid, char *str)
 		send_char(pid, *str);
 		str++;
 	}
+	send_char(pid, *str);
 }
 
 int	main(int ac, char **av)
