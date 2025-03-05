@@ -6,7 +6,7 @@
 /*   By: hdaoudi <hdaoudi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 02:42:40 by hdaoudi           #+#    #+#             */
-/*   Updated: 2025/03/05 01:10:06 by hdaoudi          ###   ########.fr       */
+/*   Updated: 2025/03/05 02:17:28 by hdaoudi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,19 @@
 #include <signal.h>
 #include <unistd.h>
 
-void	action(int signal, siginfo_t *info, void *ucontext)
+void	handler(int signal, siginfo_t *info, void *ucontext)
 {
-	static char	c = 0;
-	static int	bit = 0;
+	static char	c;
+	static int	bit;
+	static int	client_pid;
 
 	(void)ucontext;
-	(void)info;
+	if (client_pid != info->si_pid)
+	{
+		c = 0;
+		bit = 0;
+		client_pid = info->si_pid;
+	}
 	c = c << 1;
 	if (signal == SIGUSR1)
 		c = c | 1;
@@ -43,7 +49,7 @@ int	main(int ac, char **av)
 	write(1, "PID: ", 5);
 	ft_putnbr(getpid());
 	write(1, "\n", 1);
-	sa.sa_sigaction = action;
+	sa.sa_sigaction = handler;
 	sa.sa_flags = SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGUSR1, &sa, NULL);
