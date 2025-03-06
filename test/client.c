@@ -1,11 +1,11 @@
 #include "header.h"
 
-int ack_received = 0;
+int bit_received = 0;
 
 void	acknowledge(int signal)
 {
 	if(signal == SIGUSR1)
-		ack_received = 1;
+		bit_received = 1;
 	else
 	{
 		write(1, "Done!\n", 6);
@@ -20,13 +20,13 @@ void	send_char(pid_t pid, char c)
 	i = 7;
 	while (i >= 0)
 	{
-		ack_received = 0;
+		bit_received = 0;
 		if ((c >> i) & 1)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
 		i--;
-		while (!ack_received)
+		while (!bit_received)
 			pause();
 	}
 }
