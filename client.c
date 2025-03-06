@@ -6,18 +6,25 @@
 /*   By: hdaoudi <hdaoudi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 02:42:31 by hdaoudi           #+#    #+#             */
-/*   Updated: 2025/03/05 17:12:21 by hdaoudi          ###   ########.fr       */
+/*   Updated: 2025/03/06 17:39:54 by hdaoudi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	message(int pid)
+int bit_received = 0;
+
+void	acknowledge(int signal)
 {
-	(void)pid;
-	write(1, "Done!", 5);
-	exit(0);
+	if(signal == SIGUSR1)
+		bit_received = 1;
+	else
+	{
+		write(1, "Done!\n", 6);
+		exit(0);
+	}
 }
+
 void	send_char(pid_t pid, char c)
 {
 	int	i;
@@ -25,12 +32,14 @@ void	send_char(pid_t pid, char c)
 	i = 7;
 	while (i >= 0)
 	{
+		bit_received = 0;
 		if ((c >> i) & 1)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(500);
 		i--;
+		while (!bit_received)
+			pause();
 	}
 }
 
@@ -41,18 +50,26 @@ void	send_string(pid_t pid, char *str)
 		send_char(pid, *str);
 		str++;
 	}
-	send_char(pid, *str);
+	send_char(pid, '\0');
 }
 
 int	main(int ac, char **av)
 {
-	int	pid;
+	struct sigaction	sa;
+	int					pid;
+	signal(SIGUSR2, acknowledge);
+	if (ac != 3)
+		return (write(2, "Syntax: ./client PID \"string\"\n", 30), 1);
 
-	signal(SIGUSR1, message);
 	pid = ft_atoi(av[1]);
 	if (pid == -1)
 		return (write(2, "Wrong PID", 9), 1);
-	if (ac != 3)
-		return (write(2, "Syntax: ./client PID \"string\"\n", 30), 1);
+
+	sa.sa_handler = acknowledge;
+	sa.sa_flags = SA_NODEFER;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGUSR1, &sa, NULL);
+
 	send_string(pid, av[2]);
+	return (0);
 }
