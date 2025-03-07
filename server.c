@@ -6,7 +6,7 @@
 /*   By: hdaoudi <hdaoudi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 02:42:40 by hdaoudi           #+#    #+#             */
-/*   Updated: 2025/03/06 17:40:16 by hdaoudi          ###   ########.fr       */
+/*   Updated: 2025/03/07 03:42:58 by hdaoudi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main(int ac, char **av)
 
 	while (1)
 	{
-		pause(); // Wait for signals
+		pause(); 
 	}
 	return (0);
 }
