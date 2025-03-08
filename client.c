@@ -6,7 +6,7 @@
 /*   By: hdaoudi <hdaoudi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 02:42:31 by hdaoudi           #+#    #+#             */
-/*   Updated: 2025/03/08 16:19:28 by hdaoudi          ###   ########.fr       */
+/*   Updated: 2025/03/08 17:21:58 by hdaoudi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	send_char(pid_t pid, char c)
 		i--;
 		while (!bit_received)
 			pause();
-		// sleep(0.1);
 	}
 }
 
@@ -63,7 +62,7 @@ int	main(int ac, char **av)
 		return (write(2, "Syntax: ./client PID \"string\"\n", 30), 1);
 
 	pid = ft_atoi(av[1]);
-	if (pid == -1)
+	if (pid == -1 || kill(pid,0) == -1)
 		return (write(2, "Wrong PID", 9), 1);
 
 	sa.sa_handler = acknowledge;
