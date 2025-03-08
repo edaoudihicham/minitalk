@@ -6,7 +6,7 @@
 /*   By: hdaoudi <hdaoudi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 02:42:40 by hdaoudi           #+#    #+#             */
-/*   Updated: 2025/03/08 00:05:28 by hdaoudi          ###   ########.fr       */
+/*   Updated: 2025/03/08 17:22:13 by hdaoudi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,17 @@ int	main(int ac, char **av)
 	(void)av;
 	if (ac != 1)
 		return (write(2, "Syntax: ./server\n", 17), 1);
-
 	write(1, "PID: ", 5);
 	ft_putnbr(getpid());
 	write(1, "\n", 1);
-
 	sa.sa_sigaction = handler;
 	sa.sa_flags = SA_SIGINFO | SA_NODEFER;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
-
 	while (1)
 	{
-		pause(); 
+		pause();
 	}
 	return (0);
 }
