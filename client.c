@@ -6,7 +6,7 @@
 /*   By: hdaoudi <hdaoudi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 02:42:31 by hdaoudi           #+#    #+#             */
-/*   Updated: 2025/03/15 20:38:47 by hdaoudi          ###   ########.fr       */
+/*   Updated: 2025/03/15 23:17:45 by hdaoudi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	send_char(pid_t pid, char c)
 		i--;
 		while (!g_bit_received)
 			pause();
-	usleep(100);
+		usleep(100);
 	}
 }
 
