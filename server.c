@@ -6,7 +6,7 @@
 /*   By: hdaoudi <hdaoudi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 02:42:40 by hdaoudi           #+#    #+#             */
-/*   Updated: 2025/03/18 17:42:37 by hdaoudi          ###   ########.fr       */
+/*   Updated: 2025/03/18 19:28:19 by hdaoudi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,11 @@ int	main(int ac, char **av)
 	write(1, "\n", 1);
 	sa.sa_sigaction = handler;
 	sa.sa_flags = SA_SIGINFO | SA_NODEFER;
-	sigemptyset(&sa.sa_mask); //no additional signals are blocked while the signal handler is executing.
+	sigemptyset(&sa.sa_mask);
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	while (1)
 	{
-//		pause();
 	}
 	return (0);
 }
