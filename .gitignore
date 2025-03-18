@@ -1,3 +1,5 @@
 .vscode/settings.json
 .vscode
 *.o
+server
+client
